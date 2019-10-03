@@ -4,13 +4,15 @@ import (
 	"bytes"
 	"io/ioutil"
 	"log"
+	"os"
 	"strings"
 
 	"golang.org/x/net/html"
 )
 
 func main() {
-	filepath := "public/adinfo.html"
+	//filepath := "public/adinfo.html"
+	filepath := os.Args[1]
 	content, err := ioutil.ReadFile(filepath)
 	if err != nil {
 		log.Fatal(err)
