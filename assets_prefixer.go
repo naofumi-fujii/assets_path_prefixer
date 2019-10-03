@@ -12,7 +12,8 @@ import (
 
 func main() {
 	//filepath := "public/adinfo.html"
-	filepath := os.Args[1]
+	prefix := os.Args[1]
+	filepath := os.Args[2]
 	content, err := ioutil.ReadFile(filepath)
 	if err != nil {
 		log.Fatal(err)
@@ -48,10 +49,10 @@ func main() {
 	}
 	f(doc)
 
-	writeToFile(content, filepath, assetsPaths)
+	writeToFile(content, filepath, assetsPaths, prefix)
 }
-func writeToFile(message []byte, filepath string, assetsPaths []string) {
-	prefix := "foo"
+func writeToFile(message []byte, filepath string, assetsPaths []string, prefix string) {
+	//prefix := "foo"
 	var s = string(message)
 	for _, a := range assetsPaths {
 		s = strings.Replace(s, a, strings.Join([]string{prefix, "/", a}, ""), -1)
