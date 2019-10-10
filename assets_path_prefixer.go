@@ -69,7 +69,7 @@ func main() {
 	f = func(n *html.Node) {
 		if n.Type == html.ElementNode && n.Data == "script" {
 			for _, a := range n.Attr {
-				if a.Key == "src" && (!strings.HasPrefix(a.Val, "https") || !strings.HasPrefix(a.Val, "http")) {
+				if a.Key == "src" && isExternalURL(a.Val) {
 					//fmt.Println(a.Val)
 					assetsPaths = append(assetsPaths, a.Val)
 					break
@@ -77,7 +77,7 @@ func main() {
 			}
 		} else if n.Type == html.ElementNode && n.Data == "img" {
 			for _, a := range n.Attr {
-				if a.Key == "src" && (!strings.HasPrefix(a.Val, "https") || !strings.HasPrefix(a.Val, "http")) {
+				if a.Key == "src" && isExternalURL(a.Val) {
 					//fmt.Println(a.Val)
 					assetsPaths = append(assetsPaths, a.Val)
 					break
@@ -99,6 +99,9 @@ func main() {
 	f(doc)
 
 	writeToFile(content, filepath, assetsPaths, prefix)
+}
+func isExternalURL(assetPath string) bool {
+	return (!strings.HasPrefix(assetPath, "https") || !strings.HasPrefix(assetPath, "http"))
 }
 func writeToFile(message []byte, filepath string, assetsPaths []string, prefix string) {
 	//prefix := "foo"
