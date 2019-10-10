@@ -69,7 +69,7 @@ func main() {
 	f = func(n *html.Node) {
 		if n.Type == html.ElementNode && n.Data == "script" {
 			for _, a := range n.Attr {
-				if a.Key == "src" {
+				if a.Key == "src" && (!strings.HasPrefix(a.Val, "http") || !strings.HasPrefix(a.Val, "http")) {
 					//fmt.Println(a.Val)
 					assetsPaths = append(assetsPaths, a.Val)
 					break
