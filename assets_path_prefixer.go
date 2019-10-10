@@ -103,11 +103,28 @@ func main() {
 func writeToFile(message []byte, filepath string, assetsPaths []string, prefix string) {
 	//prefix := "foo"
 	var s = string(message)
-	for _, a := range assetsPaths {
+	//fmt.Println(assetsPaths)
+	for _, a := range uniqArr(assetsPaths) {
 		s = strings.Replace(s, a, strings.Join([]string{prefix, "/", a}, ""), -1)
 	}
 	err := ioutil.WriteFile(filepath, []byte(s), 0644)
 	if err != nil {
 		log.Fatal(err)
 	}
+}
+
+func uniqArr(arr []string) []string {
+	//arr := [string]{"a", "b", "c", "a"}
+	m := make(map[string]bool)
+	uniq := []string{}
+
+	for _, ele := range arr {
+		if !m[ele] {
+			m[ele] = true
+			uniq = append(uniq, ele)
+		}
+	}
+
+	//fmt.Printf("%v", uniq) // ["a", "b", "c"]
+	return uniq
 }
