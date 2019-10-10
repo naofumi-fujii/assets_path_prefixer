@@ -75,6 +75,14 @@ func main() {
 					break
 				}
 			}
+		} else if n.Type == html.ElementNode && n.Data == "img" {
+			for _, a := range n.Attr {
+				if a.Key == "src" && (!strings.HasPrefix(a.Val, "http") || !strings.HasPrefix(a.Val, "http")) {
+					//fmt.Println(a.Val)
+					assetsPaths = append(assetsPaths, a.Val)
+					break
+				}
+			}
 		} else if n.Type == html.ElementNode && n.Data == "link" {
 			for _, a := range n.Attr {
 				if a.Key == "href" {
